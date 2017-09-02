@@ -1,7 +1,7 @@
 
 require_relative 'config/environment'
 
-DB = Sequel.connect('postgres://postgres:@localhost/volt')
+DB = Sequel.connect('postgres://postgres:sinatra@localhost/volt')
 
 #List of the environment variables to copy into settings.
 #Env_Vars = %w(DB_USER DB_PASSWORD DB_HOSTNAME DB_NAME).freeze
