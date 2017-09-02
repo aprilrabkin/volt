@@ -1,12 +1,22 @@
-FROM ruby:2.4
+FROM ruby:2.3.3
+
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Setup the app directory within the docker image
-#RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir /app
+WORKDIR /app
 
 # Copy Gemfiles prior to the rest of the app so we don’t have to reinstall dependencies every time
 # we change app code.
-COPY ["Gemfile", "Gemfile.lock", "/usr/src/app/"]
+ADD Gemfile /app/Gemfile
+ADD Gemfile.lock /app/Gemfile.lock
+
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+
+RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
+
+CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
+
 
 # Install our gems
 RUN gem install --no-document --conservative bundler
@@ -14,10 +24,8 @@ RUN gem install --no-document --conservative bundler
 # Install our bundle gems
 RUN bundle install
 
-# Copy our app, except the files specified in .dockerignore
-COPY . /usr/src/app
-
-# 9292 is Puma’s default port
+ADD . /app
+EXPOSE 5432
 EXPOSE 9292
 
 # Default startup command

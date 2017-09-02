@@ -1,13 +1,12 @@
 
 require_relative 'config/environment'
 
-DB = Sequel.connect('postgres://volt:password@localhost/volt')
+DB = Sequel.connect('postgres://postgres:@localhost/volt')
 
 #List of the environment variables to copy into settings.
-Env_Vars = %w(DB_USER DB_PASSWORD DB_HOSTNAME DB_NAME).freeze
-Env_Vars.each { |name| set name, ENV.fetch(name.upcase) }
+#Env_Vars = %w(DB_USER DB_PASSWORD DB_HOSTNAME DB_NAME).freeze
+#Env_Vars.each { |name| set name, ENV.fetch(name.upcase) }
 
-require 'pry'
 class Api < Sinatra::Base
   get '/hello' do
     halt 400 unless params[:name]
