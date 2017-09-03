@@ -1,13 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    kgio (2.11.0)
     mustermann (1.0.0)
+    passenger (5.1.8)
+      rack
+      rake (>= 0.8.1)
     pg (0.21.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
-    raindrops (0.19.0)
+    rake (12.0.0)
     require_all (1.4.0)
     sequel (4.43.0)
     sinatra (2.0.0)
@@ -16,19 +18,16 @@ GEM
       rack-protection (= 2.0.0)
       tilt (~> 2.0)
     tilt (2.0.8)
-    unicorn (5.3.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  passenger (>= 5.0.25)
   pg
   require_all
   sequel
   sinatra
-  unicorn
 
 BUNDLED WITH
    1.14.4
