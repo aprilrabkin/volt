@@ -1,11 +1,7 @@
-
 require_relative 'config/environment'
-
-DB = Sequel.connect('postgres://sinatra:@localhost/sinatra')
-
-#List of the environment variables to copy into settings.
-#Env_Vars = %w(DB_USER DB_PASSWORD DB_HOSTNAME DB_NAME).freeze
-#Env_Vars.each { |name| set name, ENV.fetch(name.upcase) }
+require 'yaml'
+env_vars = YAML.load_file('secrets.yml')
+DB = Sequel.connect("postgres://#{env_vars['db_user']}:#{env_vars['db_password']}@#{env_vars['db_hostname']}/#{env_vars['db_name']}")
 
 class Api < Sinatra::Base
   get '/hello' do

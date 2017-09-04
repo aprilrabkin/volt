@@ -2,8 +2,7 @@
 
 source 'https://rubygems.org'
 
-# web microframework
-gem 'sinatra'#, '~>1.4'
+gem 'sinatra'
 gem 'require_all'
 gem 'sequel'
 gem 'pg'
